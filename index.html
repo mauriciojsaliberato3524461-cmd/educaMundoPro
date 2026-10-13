@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Projeto Do Cesar</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"><link rel="stylesheet" href="/style.css">
+  </head>
+
+  <body>
+    <!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EducaMundo Pro</title>
+    <!-- Font Awesome para carregar os ícones corretamente -->
+    <link rel="stylesheet" href="https://cloudflare.com">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- BARRA LATERAL DE NAVEGAÇÃO -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>EducaMundo <strong>Pro</strong></span>
+            </div>
+            
+            <nav class="menu">
+                <button class="menu-item active" data-tab="tab-inicio"><i class="fa-solid fa-house"></i> Início</button>
+              <button class="menu-item" data-tab="tab-guia"><i class="fa-solid fa-circle-info"></i> Resumo do Site</button>
+              <button class="menu-item" data-tab="tab-formulas"><i class="fa-solid fa-calculator"></i> Manual de Fórmulas</button>
+                <button class="menu-item" data-tab="tab-quizzes"><i class="fa-solid fa-circle-question"></i> Quizzes <span class="counter-badge" id="badge-quiz-count">0</span></button>
+                <button class="menu-item" data-tab="tab-tarefas"><i class="fa-solid fa-check-square"></i> Tarefas <span class="counter-badge" id="badge-task-count">0</span></button>
+                <button class="menu-item" data-tab="tab-analise"><i class="fa-solid fa-robot"></i> Análise de IA</button>
+                <button class="menu-item" data-tab="tab-organizador"><i class="fa-solid fa-list-check"></i> Organizador</button>
+                <button class="menu-item" data-tab="tab-financas"><i class="fa-solid fa-wallet"></i> Finanças</button>
+                <button class="menu-item" data-tab="tab-topicos"><i class="fa-solid fa-comments"></i> Monitoria</button>
+            </nav>
+        </aside>
+
+        <!-- PORTAL CENTRAL DE CONTEÚDO -->
+        <main class="main-content">
+            
+            <!-- ABA 1: INÍCIO (PAINEL GERAL) -->
+            <section id="tab-inicio" class="tab-panel active">
+                <div class="welcome-box">
+                    <h1>Tudo pronto para começarmos? 📚</h1>
+                    <p>Acompanhe os contadores abaixo para ver quando os próximos desafios e revisões chegam para você.</p>
+                </div>
+                
+                <div class="grid-two">
+                    <div class="stat-card">
+                        <h3>Próxima Tarefa</h3>
+                        <p class="cooldown-timer" id="timer-task-cooldown">03:00</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Próximo Quiz</h3>
+                        <p class="cooldown-timer" id="timer-quiz-cooldown">03:00</p>
+                    </div>
+                </div>
+
+                <div class="stats-row">
+                    <div class="stat-card">
+                        <h3>Experiência Total</h3>
+                        <p id="stat-xp" class="highlight-text">0 XP</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 2: QUIZZES AUTOMATIZADOS -->
+            <section id="tab-quizzes" class="tab-panel">
+                <h2>Área de Quizzes Automatizados</h2>
+                <p class="subtitle">Novos testes de múltipla escolha gerados a cada ciclo.</p>
+                <div class="card">
+                    <div id="quiz-container-area">
+                        <h3 id="quiz-title">Aguardando geração do próximo quiz...</h3>
+                        <div id="quiz-options" class="options-vertical"></div>
+                        <p id="quiz-feedback" class="feedback"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 3: TAREFAS GERADAS POR IA -->
+            <section id="tab-tarefas" class="tab-panel">
+                <h2>Mural de Tarefas da I.A.</h2>
+                <p class="subtitle">Limite máximo acumulado: 15 tarefas ativas.</p>
+                <div class="card">
+                    <ul id="task-list" class="simple-list"></ul>
+                </div>
+            </section>
+
+            <!-- ABA 4: AUDITORIA E ANÁLISE DE FOTO -->
+            <section id="tab-analise" class="tab-panel">
+                <h2>Verificação Inteligente de Atividades</h2>
+                <p class="subtitle">Selecione uma tarefa ativa, envie a foto do seu caderno e deixe a IA auditar o resultado.</p>
+                
+                <div class="grid-two">
+                    <div class="card">
+                        <h3>1. Detalhes do Envio</h3>
+                        <div class="vertical-form">
+                            <label for="select-analysis-task">Vincular à Tarefa:</label>
+                            <select id="select-analysis-task">
+                                <option value="">Nenhuma tarefa disponível</option>
+                            </select>
+
+                            <label for="file-analysis-input" class="custom-file-upload">
+                                <i class="fa-solid fa-camera"></i> Selecionar ou Tirar Foto da Atividade
+                            </label>
+                            <input type="file" id="file-analysis-input" accept="image/*" onchange="previewImageSafe(event)">
+                            
+                            <div class="img-preview-box">
+                                <img id="image-preview" src="" alt="Sua atividade" style="display:none; max-width:100%; border-radius:8px; margin-top:10px;">
+                            </div>
+
+                            <button class="btn-main" style="margin-top:1rem; width:100%;" onclick="runAiPhotoAnalysis()">Iniciar Auditoria Computacional</button>
+                        </div>
+                    </div>
+
+                    <div class="card terminal-card">
+                        <h3>2. Relatório de Análise da IA</h3>
+                        <div class="terminal-screen" id="terminal-ai-output">
+                            [SISTEMA PRONTO] Aguardando upload do documento fotográfico para iniciar o processamento de texto OCR...
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 5: MEU ORGANIZADOR MANUAL -->
+            <section id="tab-organizador" class="tab-panel">
+                <h2>📝 Meu organizador de tarefas</h2>
+                <p class="subtitle">Adicione uma atividade personalizada e marque quando terminar.</p>
+                <div class="card">
+                    <label style="font-weight:600; display:block; margin-bottom:0.5rem;">Qual tarefa você precisa fazer?</label>
+                    <div class="inline-form">
+                        <input type="text" id="manual-task-input" placeholder="Ex.: Estudar Matemática">
+                        <button class="btn-main" style="background-color:#6366F1;" onclick="addManualTaskSafe()">Adicionar +</button>
+                    </div>
+                    <p id="manual-task-counter" style="color:var(--text-gray); font-size:0.9rem; margin-top:0.5rem;">0 tarefas pendentes</p>
+                </div>
+                <div class="card" style="border:none; padding:0; background:transparent;">
+                    <ul id="manual-task-list" class="simple-list"></ul>
+                </div>
+            </section>
+
+            <!-- ABA 6: SIMULADOR E LABORATÓRIO FINANCEIRO -->
+            <section id="tab-financas" class="tab-panel">
+                <h2>Simulador de Economias</h2>
+                <div class="grid-two">
+                    <div class="card">
+                        <h3>Seu Planejamento</h3>
+                        <div class="vertical-form">
+                            <label>Sua Mesada/Ganho (R$)</label>
+                            <input type="number" id="fin-income" value="50" oninput="updateFinanceSafe()">
+                            <label>Quanto quer guardar (%)</label>
+                            <input type="number" id="fin-percent" value="20" oninput="updateFinanceSafe()">
+                        </div>
+                    </div>
+                    <div class="card result-card">
+                        <h3>Balanço Previsto</h3>
+                        <p>Valor para guardar: <strong id="res-save">R$ 10.00</strong></p>
+                        <p>Valor livre para gastos: <strong id="res-free">R$ 40.00</strong></p>
+                    </div>
+                </div>
+
+                                <!-- LABORATÓRIO FINANCEIRO DE JUROS SIMPLES -->
+                <div class="card" style="margin-top: 2rem;">
+                    <h3>💰 Laboratório financeiro</h3>
+                    <p class="subtitle" style="margin-bottom: 1rem;">Descubra quanto você terá com juros simples.</p>
+                    <div class="vertical-form">
+                        <label>Valor inicial (R$)</label>
+                        <input type="number" id="lab-fin-capital" placeholder="Ex.: 200">
+                        <label>Taxa de juros anual (%)</label>
+                        <input type="number" id="lab-fin-taxa" placeholder="Ex.: 10">
+                        <label>Tempo em anos</label>
+                        <input type="number" id="lab-fin-tempo" placeholder="Ex.: 2">
+                        <button class="btn-main" style="margin-top:1rem; background-color:#6366F1;" onclick="calcularLabFinanceiro()">Calcular resultado 📑</button>
+                    </div>
+                </div>
+                
+                <div class="card" id="lab-fin-result-box" style="background-color:#E8F5E9; border-color:#A5D6A7; display:none; margin-top: 1rem;">
+                    <h3>📊 Resultado do cálculo</h3>
+                    <p style="margin-top:0.5rem;">Valor inicial: <strong id="lab-res-cap">R$ 0,00</strong></p>
+                    <p>Juros calculados: <strong id="lab-res-juros" style="color:var(--success);">R$ 0,00</strong></p>
+                    <p>Total final: <strong id="lab-res-total">R$ 0,00</strong></p>
+                    <small style="color:var(--text-gray); font-size:0.75rem; display:block; margin-top:0.5rem;">Simulação educativa de juros simples, sem taxas adicionais.</small>
+                </div>
+            </section> <!-- FECHAMENTO CORRETO DA ABA DE FINANÇAS -->
+
+            <!-- ABA 7: FÓRUM DE MONITORIA CONSERTADA -->
+            <section id="tab-topicos" class="tab-panel">
+                <h2>Fórum de Monitoria</h2>
+                <p class="subtitle">Compartilhe suas dificuldades escolares ou ajude outros alunos a resolver problemas.</p>
+                
+                <div class="card">
+                    <h3>Publicar Nova Pergunta</h3>
+                    <div class="inline-form" style="margin-top: 1rem; display: flex; gap: 10px;">
+                        <input type="text" id="forum-clean-input" placeholder="Digite qual a sua dúvida escolar...">
+                        <button class="btn-main" onclick="sendForumCleanMsg()">Publicar no Mural</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>Tópicos Recentes</h3>
+                    <div id="forum-clean-box" class="options-vertical" style="margin-top: 1rem; display:flex; flex-direction:column; gap: 1rem;">
+                        <!-- Injetado via JS -->
+                    </div>
+                </div>
+            </section>
+          <!-- ABA GUIA E RESUMO DA PLATAFORMA -->
+<section id="tab-guia" class="tab-panel">
+    <h2>🗺️ Guia e Resumo da Plataforma</h2>
+    <p class="subtitle">Entenda o funcionamento de cada categoria, canal e automação do EducaMundo Pro.</p>
+    
+    <div class="grid-two">
+        <div class="card">
+            <h3>Funcionalidades.</h3>
+            <ul class="simple-list" style="margin-top: 0.5rem;">
+                <li class="list-item" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                    <strong>• Quizzes Inteligentes:</strong> Testes gerados a cada 7 minutos para somar +30 XP por acerto.
+                </li>
+                <li class="list-item" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                    <strong>• Mural de Tarefas:</strong> Desafios matemáticos e práticos, para responder deve selecionar a tarefa na analise de ia e mandar foto da atividade no seu caderno.
+                </li>
+                <li class="list-item" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                    <strong>• Análise de IA:</strong> Área de envio de fotos do caderno com leitor OCR simulado para validar as respostas das tarefas e dar +100 XP.
+                </li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>📝 Categorias Práticas</h3>
+            <ul class="simple-list" style="margin-top: 0.5rem;">
+                <li class="list-item" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                    <strong>• Início:</strong> Painel geral com experiência total (XP) e relógios de recarga (cooldown) de 7 minutos.
+                </li>
+                <li class="list-item" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                    <strong>• Organizador:</strong> Sua lista pessoal para gerenciar metas manuais e dar baixa ao concluir.
+                </li>
+                <li class="list-item" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                    <strong>• Finanças:</strong> Simulador de mesadas e Laboratório Financeiro para calcular juros simples e projeções.
+                </li>
+                <li class="list-item" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+                    <strong>• Monitoria:</strong> Fórum integrado para postar dúvidas globais e ajudar outros alunos em troca de +50 XP.
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<!-- ABA MANUAL DE FÓRMULAS UNIVERSAIS -->
+<section id="tab-formulas" class="tab-panel">
+    <h2>🧮 Manual de Fórmulas Universais</h2>
+    <p class="subtitle">Consulte os métodos e conceitos matemáticos necessários para decifrar os desafios da plataforma.</p>
+    
+    <div class="grid-two">
+        <div class="card">
+            <h3>📈 1. Juros Simples</h3>
+            <p style="font-size:0.95rem; color:var(--text-gray); margin-bottom:0.75rem;">Usado quando o rendimento é fixado apenas em cima do valor inicial depositado.</p>
+            <div style="background-color:var(--bg-main); padding:0.85rem; border-radius:6px; font-family:monospace; font-size:1.1rem; text-align:center; font-weight:700; margin-bottom:0.75rem; color:var(--primary);">
+                J = C * i * t
+            </div>
+            <ul class="simple-list" style="font-size:0.9rem; color:var(--text-soft); gap:4px; display:flex; flex-direction:column;">
+                <li><strong>• J (Juros):</strong> O valor em dinheiro que rendeu ou a multa cobrada.</li>
+                <li><strong>• C (Capital):</strong> O dinheiro inicial investido, guardado ou emprestado.</li>
+                <li><strong>• i (Taxa):</strong> A porcentagem da taxa (Ex: 5% vira 0.05 na conta).</li>
+                <li><strong>• t (Tempo):</strong> O período de meses ou anos da operação.</li>
+              <li><strong>Exemplo:</strong>Imagine que você emprestou R$ 1.000,00 para um amigo. Vocês combinaram que ele pagará esse valor de volta após 5 meses, com uma taxa de juros simples de 3% ao mês. Quanto você receberá de juros e qual o valor total que ele te pagará no final?</li>
+
+
+<li> 
+Separando os Dados</li>
+
+<li>• C (Capital): R$ 1.000,00 (o dinheiro inicial)</li>
+<li>• i (Taxa): 3% ao mês -> 3 ÷ 100 = 0,03 (a porcentagem transformada em número decimal)</li>
+<li>• t (Tempo): {5} meses (o período da operação)</li>
+
+ <li>• i (Taxa): A porcentagem da taxa (Ex: 5% vira 0.05 na conta).</li>
+<li>• t (Tempo): O período de meses ou anos da operação.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>🏷️ 2. Descontos e Acréscimos</h3>
+            <p style="font-size:0.95rem; color:var(--text-gray); margin-bottom:0.75rem;">Usado para calcular reduções à vista ou multas diretas sobre faturas.</p>
+            <div style="background-color:var(--bg-main); padding:0.85rem; border-radius:6px; font-family:monospace; font-size:1.1rem; text-align:center; font-weight:700; margin-bottom:0.75rem; color:var(--primary);">
+                Valor da Taxa = Total * (Porcentagem / 100)
+            </div>
+            <ul class="simple-list" style="font-size:0.9rem; color:var(--text-soft); gap:4px; display:flex; flex-direction:column;">
+                <li><strong>• Para Descontos:</strong> Calcule o valor da taxa e subtraia do preço original.</li>
+                <li><strong>• Para Multas/Acréscimos:</strong> Calcule o valor da taxa e some ao preço original.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="card" style="margin-top: 1.5rem;">
+        <h3>🔄 3. Juros Compostos (Conceito Teórico)</h3>
+        <p style="font-size:0.95rem; color:var(--text-soft); line-height:1.5;">
+            Diferente dos juros simples, os <strong>Juros Compostos</strong> funcionam como "juros sobre juros". Isso significa que a taxa do próximo mês não rende em cima do dinheiro que você colocou no primeiro dia, mas sim em cima do <strong>saldo total já acumulado no mês anterior</strong>. Por isso, o crescimento do dinheiro acontece de forma muito mais rápida (exponencial) com o passar do tempo!
+        </p>
+    </div>
+</section>
+
+        </main>
+    </div>
+
+</body>
+</html>
+
+    <script src="/script.js"></script>
+  </body>
+
+</html>

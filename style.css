@@ -1,0 +1,115 @@
+:root {
+    --bg-main: #F8FAFC;
+    --bg-white: #FFFFFF;
+    --text-dark: #0F172A;
+    --text-gray: #64748B;
+    --primary: #4F46E5;
+    --primary-light: #EEF2F6;
+    --border-color: #E2E8F0;
+    --success: #10B981;
+    --danger: #EF4444;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.app-layout { display: flex; width: 100vw; height: 100vh; }
+
+/* --- BARRA LATERAL DINÂMICA --- */
+.sidebar {
+    width: 260px;
+    background-color: var(--bg-white);
+    border-right: 1px solid var(--border-color);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    height: 100vh; /* Garante que ela sempre ocupe a altura total da tela */
+}
+
+/* --- MENU COM ROLAGEM INTELIGENTE POR ZOOM/TELA --- */
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    
+    /* CONTROLADORES RESPONSIVOS AUTOMÁTICOS */
+    flex: 1;                 /* Faz o menu ocupar o espaço livre e encolher se faltar tela */
+    overflow-y: auto;        /* Só exibe a barra se faltar espaço pelo zoom ou tela pequena */
+    padding-right: 4px;      /* Espaço de segurança para a barra não cobrir as letras */
+}
+
+/* Deixa a barra de rolagem sutil e moderna (só aparece no scroll ou zoom) */
+.menu::-webkit-scrollbar {
+    width: 5px;
+}
+.menu::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 4px;
+}
+
+.menu::-webkit-scrollbar {
+    width: 6px;
+}
+.menu::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 10px;
+}
+
+
+.menu-item {
+    background: transparent; border: none; color: var(--text-gray); padding: 0.75rem 1rem; text-align: left; font-size: 0.95rem; font-weight: 500; cursor: pointer; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; transition: all 0.2s; width: 100%;
+}
+.menu-item:hover { background-color: var(--primary-light); color: var(--text-dark); }
+.menu-item.active { background-color: var(--primary); color: var(--bg-white); }
+
+.counter-badge { background-color: rgba(0,0,0,0.1); padding: 0.15rem 0.5rem; border-radius: 12px; font-size: 0.75rem; font-weight: bold; }
+.menu-item.active .counter-badge { background-color: rgba(255,255,255,0.2); }
+
+.main-content { flex: 1; padding: 3rem; overflow-y: auto; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.welcome-box { background-color: var(--bg-white); border: 1px solid var(--border-color); padding: 2.5rem; border-radius: 16px; margin-bottom: 2rem; }
+.cooldown-timer { font-size: 2.5rem; font-weight: 800; color: var(--primary); margin-top: 0.5rem; letter-spacing: -1px; }
+
+.stats-row, .grid-two { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem; }
+.stat-card { background-color: var(--bg-white); border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 12px; }
+.stat-card h3 { font-size: 0.85rem; color: var(--text-gray); text-transform: uppercase; letter-spacing: 0.5px; }
+.highlight-text { font-size: 2rem; font-weight: bold; color: var(--success); margin-top: 0.5rem; }
+
+.card { background-color: var(--bg-white); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem; }
+.options-vertical { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+.opt-button { background-color: var(--bg-main); border: 1px solid var(--border-color); padding: 0.85rem 1rem; border-radius: 8px; text-align: left; font-size: 0.95rem; cursor: pointer; }
+.opt-button:hover { background-color: var(--primary-light); }
+
+.simple-list { list-style: none; }
+.list-item { display: flex; justify-content: space-between; align-items: center; padding: 1rem 0.5rem; border-bottom: 1px solid var(--border-color); }
+
+.vertical-form { display: flex; flex-direction: column; gap: 0.75rem; }
+.vertical-form label { font-size: 0.85rem; font-weight: 600; color: var(--text-gray); }
+input, select { padding: 0.65rem 0.75rem; border: 1px solid var(--border-color); border-radius: 6px; font-size: 0.95rem; background-color: var(--bg-main); }
+
+.custom-file-upload { display: block; background-color: var(--primary-light); border: 1px dashed var(--primary); text-align: center; padding: 1.5rem; border-radius: 8px; cursor: pointer; color: var(--primary); font-weight: 600; margin-top: 0.5rem; }
+
+.btn-main { background-color: var(--primary); color: var(--bg-white); border: none; padding: 0.75rem 1.25rem; border-radius: 6px; font-weight: 600; cursor: pointer; }
+
+/* TERMINAL SCREEN */
+.terminal-card { background-color: #0F172A !important; color: #38BDF8; border: none; }
+.terminal-card h3 { color: #94A3B8; }
+.terminal-screen { font-family: monospace; font-size: 0.9rem; line-height: 1.5; margin-top: 1rem; white-space: pre-wrap; color: #34D399; }
+
+.tag { display: inline-block; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; }
+.badge-blue { background-color: rgba(79, 70, 229, 0.1); color: var(--primary); }
+.feedback { margin-top: 1rem; font-weight: bold; }
