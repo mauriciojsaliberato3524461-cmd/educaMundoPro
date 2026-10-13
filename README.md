@@ -1,2 +1,6 @@
-# educaMundoPro
-O EducaMundo é uma plataforma digital que torna a educação mais acessível, interativa e divertida. Oferece quizzes, resumos, planejamento de estudos, materiais acessíveis, monitoria entre alunos e educação financeira, respeitando diferentes formas de aprender e promovendo uma educação inclusiva, organizada e eficiente com o apoio da tecnologia.
+# Projeto Do Cesar
+
+A Pen created on CodePen.
+
+Original URL: [https://codepen.io/editor/MAURICIO-JOSE-DOS-SANTOS-ALVES-LIBERATO/pen/01a122fd-a0e1-7a0b-a76d-457d5a8de3bc](https://codepen.io/editor/MAURICIO-JOSE-DOS-SANTOS-ALVES-LIBERATO/pen/01a122fd-a0e1-7a0b-a76d-457d5a8de3bc).
+
